@@ -1,0 +1,47 @@
+{
+  "compilerOptions": {
+    "target": "ES2018",
+    "module": "commonjs",
+    "removeComments": true,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "lib": [
+      "ES2018",
+      "dom"
+    ],
+    "declaration": true,
+    "noImplicitAny": false,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "strictNullChecks": true,
+    "strictFunctionTypes": false,
+    "skipLibCheck": true,
+    "outDir": "./dist",
+    "rootDir": "./app",
+    "strict": true,
+    "baseUrl": "./",
+    "paths": {
+      "@controllers/*": [
+        "../app/controllers/*"
+      ],
+      "@domain/*": [
+        "../app/domain/*"
+      ],
+      "@dto/*": [
+        "../app/dto/*"
+      ],
+      "@infraestructure/*": [
+        "../app/infraestructure/*"
+      ],
+      "@interfaces/*": [
+        "../app/interfaces/*"
+      ]
+    }
+  },
+  "include": [
+    "app/**/*"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
+}
