@@ -1,3 +1,4 @@
+import 'reflect-metadata';
 import * as validator from '../app/middleware/index.middleware';
 import bodyParser from 'body-parser';
 import express from "express";
