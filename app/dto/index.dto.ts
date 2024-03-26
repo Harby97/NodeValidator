@@ -10,10 +10,11 @@ class settingsDto {
 }
 
 class mappingDto {
-    @IsInt({ message: 'number_of_shards debe ser un numero' })
-    @IsNotEmpty({ message: 'number_of_shards es obligatorio' })
-    number_of_shards!: number;
+    @IsObject({ message: 'properties debe ser un objeto' })
+    @IsDefined({ message: 'properties es obligatorio' })
+    properties!: object;
 }
+
 
 export class IndexDTO {
     @IsString({ message: 'el nombre del indice debe ser letras' })

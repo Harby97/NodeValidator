@@ -9,9 +9,7 @@ export class IndexMiddleware {
         try {
             const exampleDto = plainToClass(IndexDTO, req.body);
             const dtoErrors = await validate(exampleDto, { skipMissingProperties: true });
-            console.log(dtoErrors)
-            console.log("--------------------------")
-            
+     
             if (dtoErrors.length > 0) {
                 const errorMessages: string[] = [];
                 dtoErrors.map(error => {
@@ -23,13 +21,11 @@ export class IndexMiddleware {
                         errorMessages.push(JSON.stringify(error.constraints));
                     }
                 });
-                console.log(errorMessages)
                 return res.status(400).json({ ErrorValidacion: errorMessages });
             }
 
             next();
         } catch (error) {
-            console.error('Error en la validación:', error);
             return res.status(500).json({ message: 'Error en la validación' });
         }
     }
