@@ -11,6 +11,7 @@ class settingsDto {
 
 class mappingDto {
     @IsObject({ message: 'properties debe ser un objeto' })
+    @IsNotEmpty({ message: 'el nombre del indice es obligatorio' })
     @IsDefined({ message: 'properties es obligatorio' })
     properties!: object;
 }
@@ -23,15 +24,18 @@ export class IndexDTO {
         message: 'El nombre no puede incluir \\, /, *, ?, ", <, >, |, `, ,, # y no puede empezar con -, _, +, ni ser . o ..',
     })
     @MaxLength(250, { message: 'El nombre no puede tener más de 250 caracteres' })
-    @IsNotEmpty({ message: 'el nombre es obligatorio' })
+    @IsNotEmpty({ message: 'el nombre del indice es obligatorio' })
+    @IsDefined({ message: 'el nombre del indice es obligatorio' })
     indexName!: string;
 
     @ValidateNested({ message: 'settings debe ser un objeto' })
+    @IsNotEmpty({ message: 'el nombre del indice es obligatorio' })
     @IsDefined({ message: 'settings es obligatorio' })
     @Type(() => settingsDto)
     settings!: settingsDto;
 
     @ValidateNested({ message: 'mapping debe ser un objeto' })
+    @IsNotEmpty({ message: 'el nombre del indice es obligatorio' })
     @IsDefined({ message: 'mapping es obligatorio' })
     @Type(() => mappingDto)
     mapping!: mappingDto;
