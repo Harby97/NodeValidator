@@ -1,11 +1,14 @@
 import { NextFunction, Request, Response } from "express";
 import { validate, ValidationError } from "class-validator";
+import { plainToClass } from "class-transformer";
 
 export class ValidatorMiddleware {
 
     async ValidateProcess(req: Request, res: Response, dto: any, next: NextFunction) {
         try {
+            console.log(dto)
             const dtoErrors = await validate(dto, { skipMissingProperties: true });
+            console.log(dtoErrors)
             if (dtoErrors.length > 0) {
                 const errorMessages: string[] = [];
                 dtoErrors.map(error => {
@@ -28,21 +31,21 @@ export class ValidatorMiddleware {
 
     async ValidateBody(req: Request, res: Response, dto: any, next: NextFunction) {
         try {
-            Object.assign(dto, req.body);
-            this.ValidateProcess(req, res, dto, next);
+            const validatedDto = plainToClass(dto, req.body); 
+            this.ValidateProcess(req, res, validatedDto, next);
 
         } catch (error) {
-            return res.status(500).json({ message: 'Error en la validación' });
+            return res.status(500).json({ message: 'Error mapeando body' });
         }
     }
 
     async ValidateParams(req: Request, res: Response, dto: any, next: NextFunction) {
         try {
-            Object.assign(dto, req.query);
-            this.ValidateProcess(req, res, dto, next);
+            const validatedDto = plainToClass(dto, req.query);
+            this.ValidateProcess(req, res, validatedDto, next);
 
         } catch (error) {
-            return res.status(500).json({ message: 'Error en la validación' });
+            return res.status(500).json({ message: 'Error mapeando params' });
         }
 
     }
