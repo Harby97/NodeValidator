@@ -1,0 +1,510 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "Elastic Search API",
+    "description": "Este proyecto es una implementación de un bloque de construcción de Elasticsearch. Está construido con Node.js y Express.js, y utiliza TypeScript . El proyecto proporciona una plantilla para la creación de aplicaciones  de elastic search para la creacion de indices docuemtnos y busqeudas de diferentes componentes de json ",
+    "version": "1.0.0",
+    "termsOfService": "http://swagger.io/terms/",
+    "contact": {
+      "email": "apiteam@swagger.io"
+    },
+    "license": {
+      "name": "MIT License",
+      "url": "https://choosealicense.com/licenses/mit/"
+    }
+  },
+  "servers": [
+    {
+      "url": "http://localhost:9080"
+    }
+  ],
+  "tags": [
+    {
+      "name": "Indice",
+      "description": "Indicedss de ElasticSearch"
+    },
+    {
+      "name": "Documentos",
+      "description": "Documentos de ElasticSearch"
+    }
+  ],
+  "paths": {
+    "/index/create": {
+      "post": {
+        "summary": "Crea un nuevo índice en Elasticsearch",
+        "tags": [
+          "Indice"
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "indexName": {
+                    "type": "string",
+                    "description": "Nombre del índice a crear."
+                  },
+                  "body": {
+                    "type": "object",
+                    "default": null,
+                    "description": "Definición del índice en formato JSON."
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Índice creado exitosamente.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "description": "Mensaje de confirmación"
+                    },
+                    "searchResult": {
+                      "type": "object",
+                      "description": "Respuesta detallada de la operación (opcional)."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Ocurrió un error al crear el índice.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "description": "Mensaje de error."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/index/query": {
+      "get": {
+        "summary": "Crea un nuevo índice en Elasticsearch",
+        "tags": [
+          "Indice"
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "indexName": {
+                    "type": "string",
+                    "description": "Nombre del índice a crear."
+                  },
+                  "body": {
+                    "type": "object",
+                    "default": null,
+                    "description": "Definición del índice en formato JSON."
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Índice creado exitosamente.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "description": "Mensaje de confirmación"
+                    },
+                    "searchResult": {
+                      "type": "object",
+                      "description": "Respuesta detallada de la operación (opcional)."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Ocurrió un error al crear el índice.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "description": "Mensaje de error."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/index/search": {
+      "post": {
+        "summary": "Ejecuta una búsqueda en un índice de Elasticsearch",
+        "tags": [
+          "Indice"
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "indexName": {
+                    "type": "string",
+                    "description": "Nombre del índice a buscar."
+                  },
+                  "match": {
+                    "type": "object",
+                    "description": "Criterios de búsqueda en formato Elasticsearch Query DSL (consulta por coincidencia)."
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Resultados de la búsqueda.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "description": "Respuesta de la búsqueda."
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Consulta de búsqueda inválida."
+          },
+          "500": {
+            "description": "Ocurrió un error al ejecutar la búsqueda."
+          }
+        }
+      }
+    },
+    "/index/delete": {
+      "delete": {
+        "summary": "Crea un nuevo índice en Elasticsearch",
+        "tags": [
+          "Indice"
+        ],
+        "responses": {
+          "201": {
+            "description": "Índice creado exitosamente.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "description": "Mensaje de confirmación"
+                    },
+                    "searchResult": {
+                      "type": "object",
+                      "description": "Respuesta detallada de la operación (opcional)."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Ocurrió un error al crear el índice.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "description": "Mensaje de error."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/document/create": {
+      "post": {
+        "summary": "Crea un documento o varios documentos (bulk) en Elasticsearch",
+        "tags": [
+          "Documentos"
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "indexName": {
+                    "type": "string",
+                    "description": "Nombre del índice en Elasticsearch."
+                  },
+                  "id": {
+                    "type": "string",
+                    "description": "Identificador del documento (opcional para bulk)."
+                  },
+                  "body": {
+                    "type": "object",
+                    "description": "Contenido del documento a indexar."
+                  },
+                  "type": {
+                    "type": "string",
+                    "description": "Tipo de operación: 'single' (documento único) o 'bulk' (varios documentos)."
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Documento(s) creado(s) exitosamente.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "description": "Mensaje de confirmación"
+                    },
+                    "searchResult": {
+                      "type": "object",
+                      "description": "Respuesta detallada de la operación (opcional)."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Ocurrió un error al crear el documento.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "description": "Mensaje de error."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "summary": "Crea un documento o varios documentos (bulk) en Elasticsearch",
+        "tags": [
+          "Documentos"
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "indexName": {
+                    "type": "string",
+                    "description": "Nombre del índice en Elasticsearch."
+                  },
+                  "id": {
+                    "type": "string",
+                    "description": "Identificador del documento (opcional para bulk)."
+                  },
+                  "body": {
+                    "type": "object",
+                    "description": "Contenido del documento a indexar."
+                  },
+                  "type": {
+                    "type": "string",
+                    "description": "Tipo de operación: 'single' (documento único) o 'bulk' (varios documentos)."
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Documento(s) creado(s) exitosamente.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "description": "Mensaje de confirmación"
+                    },
+                    "searchResult": {
+                      "type": "object",
+                      "description": "Respuesta detallada de la operación (opcional)."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Ocurrió un error al crear el documento.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "description": "Mensaje de error."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/documents/get": {
+      "get": {
+        "summary": "Obtiene un documento existente por su ID",
+        "tags": [
+          "Documentos"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "description": "Identificador del documento a recuperar."
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Documento recuperado exitosamente.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "description": "Contenido del documento."
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Documento no encontrado."
+          },
+          "500": {
+            "description": "Ocurrió un error al recuperar el documento."
+          }
+        }
+      }
+    },
+    "/documents/delete": {
+      "delete": {
+        "summary": "Elimina un documento existente en Elasticsearch",
+        "tags": [
+          "Documentos"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "description": "Identificador del documento a eliminar."
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Documento eliminado exitosamente."
+          },
+          "404": {
+            "description": "Documento no encontrado."
+          },
+          "500": {
+            "description": "Ocurrió un error al eliminar el documento."
+          }
+        }
+      },
+      "get": {
+        "summary": "Obtiene un documento existente por su ID",
+        "tags": [
+          "Documentos"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "description": "Identificador del documento a recuperar."
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Documento recuperado exitosamente.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "description": "Contenido del documento."
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Documento no encontrado."
+          },
+          "500": {
+            "description": "Ocurrió un error al recuperar el documento."
+          }
+        }
+      }
+    }
+  }
+}

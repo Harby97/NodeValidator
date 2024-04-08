@@ -1,15 +1,11 @@
 import { NextFunction, Request, Response } from "express";
-import { DocumentDTO } from "../dto/document.dto";
 import { validate, ValidationError } from "class-validator";
-import { plainToClass } from "class-transformer";
 
-export class DocumentMiddleware {
+export class ValidatorMiddleware {
 
-    async documentValidator(req: Request, res: Response, next: NextFunction) {
+    async ValidateProcess(req: Request, res: Response, dto: any, next: NextFunction) {
         try {
-            const exampleDto = plainToClass(DocumentDTO, req.body);
-            const dtoErrors = await validate(exampleDto, { skipMissingProperties: true });
-     
+            const dtoErrors = await validate(dto, { skipMissingProperties: true });
             if (dtoErrors.length > 0) {
                 const errorMessages: string[] = [];
                 dtoErrors.map(error => {
@@ -17,7 +13,6 @@ export class DocumentMiddleware {
                         error.children.map(childError => {
                             errorMessages.push(JSON.stringify(childError.constraints));
                         });
-
                     } else if (error.constraints && error.constraints !== undefined) {
                         errorMessages.push(JSON.stringify(error.constraints));
                     }
@@ -30,7 +25,26 @@ export class DocumentMiddleware {
             return res.status(500).json({ message: 'Error en la validación' });
         }
     }
-    extractConstraints(dtoErrors: ValidationError[]) {
-        throw new Error("Method not implemented.");
+
+    async ValidateBody(req: Request, res: Response, dto: any, next: NextFunction) {
+        try {
+            Object.assign(dto, req.body);
+            this.ValidateProcess(req, res, dto, next);
+
+        } catch (error) {
+            return res.status(500).json({ message: 'Error en la validación' });
+        }
     }
+
+    async ValidateParams(req: Request, res: Response, dto: any, next: NextFunction) {
+        try {
+            Object.assign(dto, req.query);
+            this.ValidateProcess(req, res, dto, next);
+
+        } catch (error) {
+            return res.status(500).json({ message: 'Error en la validación' });
+        }
+
+    }
+
 }
