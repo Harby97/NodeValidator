@@ -6,9 +6,7 @@ export class ValidatorMiddleware {
 
     async ValidateProcess(req: Request, res: Response, dto: any, next: NextFunction) {
         try {
-            console.log(dto)
             const dtoErrors = await validate(dto, { skipMissingProperties: true });
-            console.log(dtoErrors)
             if (dtoErrors.length > 0) {
                 const errorMessages: string[] = [];
                 dtoErrors.map(error => {

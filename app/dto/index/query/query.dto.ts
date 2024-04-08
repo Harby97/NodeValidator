@@ -1,42 +1,35 @@
-import { IsDefined, IsNotEmptyObject, IsObject, ValidateNested } from 'class-validator';
 import { Type } from 'class-transformer';
-import { IsOptional } from 'class-validator';
-import { IsInt, IsLowercase, IsNotEmpty, IsString, Matches, MaxLength } from 'class-validator';
+import { IsArray, IsDefined, IsNotEmpty, IsString, Matches, ValidateNested } from 'class-validator';
 
-class settingsDto {
-    @IsInt({ message: 'number_of_shards debe ser un numero' })
-    @IsNotEmpty({ message: 'number_of_shards es obligatorio' })
-    number_of_shards!: number;
+class FilterDTO {
+    @IsString({ message: 'Field debe ser una cadena de texto' })
+    @IsNotEmpty({ message: 'Field no puede estar vacio' })
+    @IsDefined({ message: 'field es obligatorio' })
+    @Matches(/^(?!.*\b(?:\*|or|and)\b).+$/, { message: 'Field no puede contener "*", "or" o "and"' })
+    field!: string;
+
+    @IsString({ message: 'Value debe ser una cadena de texto' })
+    @IsNotEmpty({ message: 'Value no puede estar vacio' })
+    @IsDefined({ message: 'value es obligatorio' })
+    value!: string;
+
+    @IsString({ message: 'Type debe ser una cadena de texto' })
+    @IsNotEmpty({ message: 'Type no puede estar vacio' })
+    @IsDefined({ message: 'type es obligatorio' })
+    @Matches(/^(<|>|=)$/, { message: 'Type solo puede ser <, > o ='})
+    type!: string;
 }
 
-class mappingDto {
-    @IsObject({ message: 'properties debe ser un objeto' })
-    @IsNotEmpty({ message: 'el nombre del indice es obligatorio' })
-    @IsDefined({ message: 'properties es obligatorio' })
-    properties!: object;
-}
+export class QueryDTO {
+    @IsArray({ message: 'Fields debe ser un array' })
+    @IsNotEmpty({ message: 'Fields no puede estar vacio' })
+    @IsDefined({ message: 'fields es obligatorio' })
+    @Matches(/^(?!.*\b(?:\*|or|and)\b).*$/, { each: true, message: 'Los elementos de Fields no pueden contener "*", "or" o "and"' })
+    fields!: string[];
 
-
-export class IndexDTO {
-    @IsString({ message: 'el nombre del indice debe ser letras' })
-    @IsLowercase({ message: 'el nombre del indice debe estar en minúsculas' })
-    @Matches(/^(?![-_+])(?!.*\.\.?$)[^\\\/*?"<>|,`#]+$/, {
-        message: 'El nombre no puede incluir \\, /, *, ?, ", <, >, |, `, ,, # y no puede empezar con -, _, +, ni ser . o ..',
-    })
-    @MaxLength(250, { message: 'El nombre no puede tener más de 250 caracteres' })
-    @IsNotEmpty({ message: 'el nombre del indice es obligatorio' })
-    @IsDefined({ message: 'el nombre del indice es obligatorio' })
-    indexName!: string;
-
-    @ValidateNested({ message: 'settings debe ser un objeto' })
-    @IsNotEmpty({ message: 'el nombre del indice es obligatorio' })
-    @IsDefined({ message: 'settings es obligatorio' })
-    @Type(() => settingsDto)
-    settings!: settingsDto;
-
-    @ValidateNested({ message: 'mapping debe ser un objeto' })
-    @IsNotEmpty({ message: 'el nombre del indice es obligatorio' })
-    @IsDefined({ message: 'mapping es obligatorio' })
-    @Type(() => mappingDto)
-    mapping!: mappingDto;
+    @ValidateNested()
+    @IsNotEmpty({ message: 'Filters no puede estar vacio' })
+    @IsDefined({ message: 'filters es obligatorio' })
+    @Type(() => FilterDTO)
+    filters!: FilterDTO;
 }

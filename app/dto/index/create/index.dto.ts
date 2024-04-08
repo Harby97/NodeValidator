@@ -1,4 +1,4 @@
-import { IsDefined, IsObject, ValidateNested } from 'class-validator';
+import { IsDefined, IsObject, IsOptional, ValidateNested } from 'class-validator';
 import { Type } from 'class-transformer';
 import { IsInt, IsNotEmpty } from 'class-validator';
 
@@ -19,13 +19,13 @@ class mappingDto {
 export class IndexDTO {
     @ValidateNested({ message: 'settings debe ser un objeto' })
     @IsNotEmpty({ message: 'el nombre del indice es obligatorio' })
-    @IsDefined({ message: 'settings es obligatorio' })
+    @IsOptional()
     @Type(() => settingsDto)
     settings!: settingsDto;
 
     @ValidateNested({ message: 'mapping debe ser un objeto' })
     @IsNotEmpty({ message: 'el nombre del indice es obligatorio' })
-    @IsDefined({ message: 'mapping es obligatorio' })
+    @IsOptional()
     @Type(() => mappingDto)
     mapping!: mappingDto;
 }
